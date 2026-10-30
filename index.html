@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzado de Seguridad SOS</title>
+    
+<!-- Favicon -->    
+<link rel="icon" type="image/png" href="images/logo_icon.png">
+
+    <!-- Meta tags SEO básicos -->
+    <meta name="description" content="Especialistas en calzado de seguridad industrial B2B. Marcas líderes, protección certificada y ventas por mayoreo a todo México.">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        caution: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome (Iconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #f8fafc; /* text-slate-50 */
+        }
+        
+        /* Ocultar barra de desplazamiento manteniendo funcionalidad */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        /* Transiciones de vistas SPA */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .view-section.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Utilidad para el acordeón */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+        
+        /* Fondo adaptativo: centrado y oscuro en móvil, nítido y a la derecha en PC */
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.95)), url('images/hero_bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero-bg {
+                background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.35) 100%), url('images/hero_bg.jpg');
+                background-position: right center;
+                background-attachment: fixed;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <header class="fixed w-full top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo Área -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer nav-link" data-target="inicio">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo_icon.png" alt="Logotipo SOS" class="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]">
+                        <div>
+                            <h1 class="text-xl font-bold tracking-tight text-white leading-none">Calzado de Seguridad<br><span class="text-caution-400">SOS</span></h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="nav-link text-slate-300 hover:text-caution-400 font-medium transition-colors text-sm uppercase tracking-wide" data-target="inicio">Inicio</a>
+                    <a href="#productos" class="nav-link text-slate-300 hover:text-caution-400 font-medium transition-colors text-sm uppercase tracking-wide" data-target="productos">Productos</a>
+                    <a href="#contacto" class="nav-link text-slate-300 hover:text-caution-400 font-medium transition-colors text-sm uppercase tracking-wide" data-target="contacto">Contacto</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (oculto por defecto) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-850 border-b border-slate-800 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#inicio" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-caution-400 hover:bg-slate-800" data-target="inicio">Inicio</a>
+                <a href="#productos" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-caution-400 hover:bg-slate-800" data-target="productos">Productos</a>
+                <a href="#contacto" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-caution-400 hover:bg-slate-800" data-target="contacto">Contacto</a>
+                <a href="#privacidad" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-300 hover:text-caution-400 hover:bg-slate-800" data-target="privacidad">Aviso de Privacidad</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20">
+        
+        <!-- ==============================================
+             SECCIÓN 1: INICIO
+             ============================================== -->
+        <section id="inicio" class="view-section active">
+            <!-- Hero -->
+            <div class="hero-bg relative min-h-[calc(100vh-5rem)] py-12 md:py-28 lg:py-40 flex items-center">
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-xl text-left">
+                        
+                        <!-- Badge superior compacto en móvil -->
+                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-caution-500/10 border border-caution-500/30 text-caution-400 font-bold text-[11px] sm:text-xs uppercase tracking-wider mb-3">
+                            <i class="fa-solid fa-industry"></i> Calzado de Seguridad Industrial
+                        </div>
+
+                        <!-- Titular escalado para no saturar la pantalla vertical -->
+                        <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight uppercase tracking-tight">
+                            Protección <br />
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-caution-400 to-yellow-200">que trabaja contigo</span>
+                        </h2>
+
+                        <!-- Lema central en una sola línea o salto fluido -->
+                        <p class="mt-2 text-xs sm:text-sm md:text-base font-bold text-caution-400 tracking-wider uppercase flex flex-wrap items-center gap-1.5 sm:gap-2">
+                            <span>Seguridad</span> <span class="text-slate-600">•</span>
+                            <span>Confort</span> <span class="text-slate-600">•</span>
+                            <span>Resistencia</span>
+                        </p>
+
+                        <!-- Subtítulo con margen compacto -->
+                        <p class="mt-3 text-sm sm:text-base text-slate-300 font-light leading-relaxed">
+                            Distribuidores directos de calzado de alta durabilidad y diseño ergonómico. Cumplimiento de normas nacionales e internacionales para su flotilla operativa.
+                        </p>
+
+                        <!-- Badges ordenados: en móvil quedan 2 arriba y 1 centrado abajo; en tablet/PC van en línea -->
+                        <div class="mt-5 grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3 text-xs font-semibold text-slate-300">
+                            <span class="flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 border border-slate-700/80 px-2.5 py-1.5 rounded-md">
+                                <i class="fa-solid fa-shield-halved text-caution-400"></i> Máxima Protección
+                            </span>
+                            <span class="flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 border border-slate-700/80 px-2.5 py-1.5 rounded-md">
+                                <i class="fa-solid fa-shoe-prints text-caution-400"></i> Diseño Ergonómico
+                            </span>
+                            <span class="col-span-2 sm:col-span-1 flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 border border-slate-700/80 px-2.5 py-1.5 rounded-md">
+                                <i class="fa-solid fa-link text-caution-400"></i> Alta Durabilidad
+                            </span>
+                        </div>
+
+                        <!-- Botones visibles sin necesidad de scrollear tanto -->
+                        <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <a href="#productos" class="nav-link px-6 py-3.5 bg-caution-500 hover:bg-caution-400 text-slate-900 font-bold rounded-lg text-center transition-all shadow-[0_0_20px_rgba(234,179,8,0.25)] text-sm sm:text-base" data-target="productos">
+                                Ver Catálogo de Productos
+                            </a>
+                            <a href="#contacto" class="nav-link px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-slate-500 text-white font-medium rounded-lg text-center transition-all text-sm sm:text-base" data-target="contacto">
+                                Contactar a un Asesor
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiénes Somos (Misión, Visión, Valores) -->
+            <div class="py-24 bg-slate-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl font-bold text-white mb-4">¿Quiénes Somos?</h3>
+                        <div class="w-20 h-1 bg-caution-500 mx-auto rounded"></div>
+                        <p class="mt-6 text-slate-400 max-w-2xl mx-auto text-lg">
+                            Somos socios estratégicos de las empresas de México, proporcionando soluciones en seguridad industrial mediante calzado de alto rendimiento, certificado y diseñado para los entornos más exigentes.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <!-- Misión -->
+                        <div class="bg-slate-850 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
+                            <div class="w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center text-caution-400 text-2xl mb-6">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Nuestra Misión</h4>
+                            <p class="text-slate-400 leading-relaxed">
+                                Proveer calzado de seguridad de grado industrial superior que garantice la integridad física del trabajador, reduciendo riesgos laborales e incrementando el confort operativo en la industria mexicana.
+                            </p>
+                        </div>
+                        
+                        <!-- Visión -->
+                        <div class="bg-slate-850 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
+                            <div class="w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center text-caution-400 text-2xl mb-6">
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Nuestra Visión</h4>
+                            <p class="text-slate-400 leading-relaxed">
+                                Consolidarnos como el distribuidor B2B referente a nivel nacional, reconocidos por nuestra capacidad de respuesta, asesoría técnica especializada y un portafolio de marcas de prestigio global.
+                            </p>
+                        </div>
+
+                        <!-- Valores -->
+                        <div class="bg-slate-850 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
+                            <div class="w-14 h-14 bg-slate-800 rounded-lg flex items-center justify-center text-caution-400 text-2xl mb-6">
+                                <i class="fa-solid fa-gem"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Nuestros Valores</h4>
+                            <ul class="text-slate-400 space-y-3 text-sm">
+                                <li class="flex items-center"><i class="fa-solid fa-check text-caution-500 w-5 flex-shrink-0"></i> Compromiso Inquebrantable</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-caution-500 w-5 flex-shrink-0"></i> Protección Certificada</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-caution-500 w-5 flex-shrink-0"></i> Calidad en el Servicio</li>
+                                <li class="flex items-center"><i class="fa-solid fa-check text-caution-500 w-5 flex-shrink-0"></i> Confianza Comercial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Franja de Marcas -->
+            <div class="py-12 bg-slate-950 border-y border-slate-800 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
+                    <p class="text-sm font-semibold text-slate-500 uppercase tracking-widest">Distribuidores Autorizados de las Mejores Marcas</p>
+                </div>
+                <div class="max-w-6xl mx-auto px-4 flex flex-wrap justify-center gap-10 md:gap-20 items-center grayscale opacity-60">
+                    <!-- Logos simulados con texto e iconos para no depender de imágenes externas rotas -->
+                    <div class="flex items-center gap-2 font-black text-2xl text-slate-300"><i class="fa-solid fa-mountain"></i> TIMBERPRO</div>
+                    <div class="flex items-center gap-2 font-black text-2xl text-slate-300"><i class="fa-solid fa-truck-fast"></i> CAT-IND</div>
+                    <div class="flex items-center gap-2 font-black text-2xl text-slate-300"><i class="fa-solid fa-shield-cat"></i> PUMA-SAFE</div>
+                    <div class="flex items-center gap-2 font-black text-2xl text-slate-300"><i class="fa-solid fa-hammer"></i> RHINO-GEAR</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECCIÓN 2: PRODUCTOS
+             ============================================== -->
+        <section id="productos" class="view-section py-20 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center mb-16">
+                    <span class="text-caution-400 font-bold tracking-widest uppercase text-sm mb-2 block">Gama de Protección Certificada</span>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Clasificación de Calzado Industrial</h3>
+                    <div class="w-24 h-1 bg-caution-500 mx-auto rounded"></div>
+                    <p class="mt-6 text-slate-400 max-w-3xl mx-auto text-lg">
+                        Proveemos soluciones bajo norma oficial NOM-113-STPS adaptadas a las exigencias de cada puesto de trabajo. Solicite la ficha técnica y cotización por volumen de la categoría requerida.
+                    </p>
+                </div>
+
+                <!-- Grid de 6 Tipos Normativos Estandarizados -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- 1. Ocupacional (Tipo I) -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('ocupacional')">
+                            <img src="Images/tipo_ocupacional.jpeg" alt="Calzado Ocupacional Tipo I" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-slate-700/90 backdrop-blur-sm text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md border border-slate-600 shadow-md">
+                                NOM-113 Tipo I
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Calzado Ocupacional</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Uso rudo ligero • Servicios • Almacén</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Diseñado para actividades sin riesgo de impacto severo.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Suela antiderrapante de alta tracción y resistencia a desgaste.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Ergonómico, ligero y transpirable para jornadas extensas.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20solicito%20el%20cat%C3%A1logo%20y%20precios%20de%20Calzado%20Ocupacional%20(Tipo%20I)%20para%20mi%20empresa." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Dieléctrico (Tipo III) -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('dielectrico')">
+                            <img src="Images/tipo_dielectrico.jpg" alt="Calzado Dieléctrico Tipo III" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-caution-500 text-slate-900 text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md shadow-md">
+                                NOM-113 Tipo III
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Calzado Dieléctrico</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Mantenimiento • Líneas de Media y Alta Tensión</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-bolt text-caution-500 mt-1 mr-2 text-xs"></i> Protección probada hasta 14,000 V a 60 Hz contra choque eléctrico.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> 100% libre de metales (Casquillo de policarbonato o fibra).</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Suela aislante en poliuretano bidensidad o acrilo-nitrilo.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20requiero%20asesor%C3%ADa%20y%20cotizaci%C3%B3n%20para%20Calzado%20Diel%C3%A9ctrico%20(Tipo%20III)." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. Antiestático (Tipo VII) -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('antiestatico')">
+                            <img src="Images/tipo_antiestatico.jpeg" alt="Calzado Antiestático ESD Tipo VII" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-blue-500 text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md shadow-md">
+                                NOM-113 Tipo VII (ESD)
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Calzado Antiestático (ESD)</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Electrónica • Cuartos Limpios • Químicos</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Disipa acumulación de cargas electrostáticas corporales.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Previene chispas que puedan encender vapores o dañar circuitos.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Resistencia eléctrica controlada según normativa internacional.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20me%20interesa%20calzado%20Antiest%C3%A1tico%20ESD%20Tipo%20VII%20para%20planta%20industrial." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Hidrofugado -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('hidrofugado')">
+                            <img src="Images/tipo_hidrofugado.jpeg" alt="Calzado Piel Hidrofugada" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md shadow-md">
+                                Protección Especial
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Piel Hidrofugada</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Frigoríficos • Cárnicos • Intemperie</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-droplet text-caution-500 mt-1 mr-2 text-xs"></i> Cuero tratado químicamente que repele la humedad continua.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Conserva suavidad, flexibilidad y transpiración sin endurecerse.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Resistencia a grasas, aceites y salpicaduras ligeras de líquidos.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20solicito%20opciones%20de%20calzado%20con%20piel%20Hidrofugada." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 5. Anti Penetración (Tipo VI) -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('antipenetracion')">
+                            <img src="Images/tipo_antipenetracion.jpg" alt="Calzado Resistente a la Penetración Tipo VI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-orange-600 text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md shadow-md">
+                                NOM-113 Tipo VI
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Anti Penetración</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Construcción • Demolición • Reciclaje</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-shield-halved text-caution-500 mt-1 mr-2 text-xs"></i> Plantilla anti-perforación integrada (Kevlar o acero templado).</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Detiene objetos punzocortantes en piso (clavos, rebabas, vidrios).</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Flexibilidad óptima para marcha continua en terreno agreste.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20requiero%20cotizaci%C3%B3n%20de%20calzado%20con%20plantilla%20Anti%20Penetraci%C3%B3n." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 6. Impermeable -->
+                    <div class="bg-slate-850 border border-slate-800 rounded-2xl overflow-hidden group hover:border-caution-500/50 transition-all shadow-lg flex flex-col">
+                        <div class="relative w-full aspect-square overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer group" onclick="openProductModal('impermeable')">
+                            <img src="Images/tipo_impermeable.webp" alt="Calzado 100% Impermeable y Membranas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 z-10 bg-cyan-600 text-white text-[11px] font-black tracking-wide px-2.5 py-1 rounded-md shadow-md">
+                                Protección Hidráulica
+                            </div>
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-sm backdrop-blur-[2px]">
+                                <i class="fa-solid fa-magnifying-glass-plus text-caution-400 text-lg"></i>
+                                <span>Ver despiece técnico</span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2">Impermeable Total</h4>
+                                <p class="text-xs text-caution-400 font-semibold uppercase mb-3">Minería • Lavado • Plantas de Tratamiento</p>
+                                <ul class="text-sm text-slate-400 space-y-2 mb-6">
+                                    <li class="flex items-start"><i class="fa-solid fa-water text-caution-500 mt-1 mr-2 text-xs"></i> Bota de PVC/Poliuretano inyectado o con membrana sellada.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Barrera absoluta contra lodo, agua estancada y químicos diluidos.</li>
+                                    <li class="flex items-start"><i class="fa-solid fa-check text-caution-500 mt-1 mr-2 text-xs"></i> Acabado sanitario y desinfección rápida.</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/523322222924?text=Hola,%20me%20interesa%20calzado%20de%20seguridad%20100%25%20Impermeable." target="_blank" class="block w-full text-center bg-slate-800 hover:bg-caution-500 text-slate-200 hover:text-slate-900 font-bold py-3 px-4 rounded-lg border border-slate-700 hover:border-caution-500 transition-all">
+                                <i class="fa-brands fa-whatsapp mr-2"></i> Solicitar Modelos y Precios
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- CTA para capturar prospectos y enviar catálogo completo -->
+                <div class="mt-16 text-center bg-slate-850 border border-slate-800 p-8 rounded-2xl max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+                    <div class="text-left">
+                        <span class="text-xs font-bold uppercase tracking-wider text-caution-400">Atención Exclusiva a Compras y RRHH</span>
+                        <h4 class="text-2xl font-bold text-white mt-1 mb-2">¿Requiere catálogo completo con fichas técnicas?</h4>
+                        <p class="text-slate-400 text-sm">Contáctenos para registrar su empresa y enviarle el catálogo industrial vigente en PDF junto con la lista de precios por volumen.</p>
+                    </div>
+                    <a href="https://wa.me/523322222924?text=Hola,%20represento%20a%20una%20empresa%20y%20deseo%20solicitar%20el%20cat%C3%A1logo%20general%20en%20PDF%20y%20lista%20de%20precios%20mayoreo." target="_blank" class="whitespace-nowrap px-8 py-4 bg-caution-500 hover:bg-caution-400 text-slate-900 font-bold rounded-lg transition-colors shadow-lg">
+                        Solicitar Catálogo PDF
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECCIÓN 3: CONTACTO
+             ============================================== -->
+        <section id="contacto" class="view-section py-20 bg-slate-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Atención Corporativa B2B</h3>
+                    <div class="w-24 h-1 bg-caution-500 mx-auto rounded"></div>
+                    <p class="mt-6 text-slate-400 max-w-2xl mx-auto text-lg">
+                        En Calzado de Seguridad SOS priorizamos la atención directa y ágil. Resuelva sus dudas o comuníquese con un asesor inmediatamente.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Columna Izquierda: Detalles de contacto y FAQ -->
+                    <div class="flex flex-col gap-10">
+                        
+                        <!-- Tarjetas de contacto directo -->
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+                                <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-caution-400 text-xl mb-4">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <h5 class="text-white font-bold text-lg mb-1">Línea Directa / Fijo</h5>
+                                <p class="text-slate-400 mb-3">(33) 2466 - 0973</p>
+                                <a href="tel:+523324660973" class="text-caution-400 hover:text-caution-300 text-sm font-medium">Llamar ahora &rarr;</a>
+                            </div>
+
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800">
+                                <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-green-500 text-xl mb-4">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <h5 class="text-white font-bold text-lg mb-1">WhatsApp B2B</h5>
+                                <p class="text-slate-400 mb-3">(33) 2222 - 2924</p>
+                                <a href="https://wa.me/523322222924?text=Hola,%20me%20comunico%20desde%20la%20p%C3%A1gina%20web%20para%20solicitar%20asesor%C3%ADa%20comercial." target="_blank" class="text-green-500 hover:text-green-400 text-sm font-medium">Enviar mensaje &rarr;</a>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 sm:col-span-2">
+                                <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-caution-400 text-xl mb-4">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </div>
+                                <h5 class="text-white font-bold text-lg mb-1">Correo Electrónico</h5>
+                                <p class="text-slate-400 mb-3">contacto@calzadodeseguridadsos.com.mx</p>
+                                <a href="mailto:contacto@calzadodeseguridadsos.com.mx" class="text-caution-400 hover:text-caution-300 text-sm font-medium">Enviar correo &rarr;</a>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Acordeón -->
+                        <div class="bg-slate-900 rounded-xl border border-slate-800 p-6">
+                            <h4 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                                <i class="fa-regular fa-circle-question text-caution-500"></i> Preguntas Frecuentes
+                            </h4>
+                            
+                            <div class="space-y-4">
+                                <!-- FAQ Item 1: Mayoreo y Menudeo -->
+                                <div class="border border-slate-800 rounded-lg bg-slate-850 overflow-hidden">
+                                    <button class="w-full px-5 py-4 text-left flex justify-between items-center text-white font-medium hover:bg-slate-800 transition-colors focus:outline-none" onclick="toggleAccordion(this)">
+                                        ¿Venden por menudeo o solo por mayoreo a empresas?
+                                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="accordion-content bg-slate-900 px-5 text-slate-400 text-sm leading-relaxed">
+                                        Atendemos a todo tipo de clientes. Nuestro volumen principal es la venta corporativa y por mayoreo a empresas con precios escalonados, pero también realizamos ventas por menudeo y a personas físicas directamente en nuestra tienda/bodega o con envíos a domicilio.
+                                    </div>
+                                </div>
+
+                                <!-- FAQ Item 2: Cobertura de Envíos -->
+                                <div class="border border-slate-800 rounded-lg bg-slate-850 overflow-hidden">
+                                    <button class="w-full px-5 py-4 text-left flex justify-between items-center text-white font-medium hover:bg-slate-800 transition-colors focus:outline-none" onclick="toggleAccordion(this)">
+                                        ¿Hacen envíos a todo México?
+                                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="accordion-content bg-slate-900 px-5 text-slate-400 text-sm leading-relaxed">
+                                        Sí, gestionamos envíos consolidados y paquetería express a cualquier estado de la República Mexicana mediante transportes seguros, garantizando la entrega tanto de pedidos por par como de tarimas completas.
+                                    </div>
+                                </div>
+
+                                <!-- FAQ Item 3: Normativas y Certificaciones -->
+                                <div class="border border-slate-800 rounded-lg bg-slate-850 overflow-hidden">
+                                    <button class="w-full px-5 py-4 text-left flex justify-between items-center text-white font-medium hover:bg-slate-800 transition-colors focus:outline-none" onclick="toggleAccordion(this)">
+                                        ¿Qué certificaciones y normativas cumple su calzado?
+                                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="accordion-content bg-slate-900 px-5 text-slate-400 text-sm leading-relaxed">
+                                        Todo nuestro calzado está 100% certificado y probado bajo la Norma Oficial Mexicana <strong>NOM-113-STPS-2009</strong> en sus diferentes clasificaciones (Tipo I Ocupacional, Tipo III Dieléctrico, Tipo VI Anti-penetración, entre otras). Proveemos las fichas técnicas y certificados de laboratorio correspondientes para auditorías internas de seguridad e higiene laboral en México.
+                                    </div>
+                                </div>
+
+                                <!-- FAQ Item 4: Facturación -->
+                                <div class="border border-slate-800 rounded-lg bg-slate-850 overflow-hidden">
+                                    <button class="w-full px-5 py-4 text-left flex justify-between items-center text-white font-medium hover:bg-slate-800 transition-colors focus:outline-none" onclick="toggleAccordion(this)">
+                                        ¿Emiten factura fiscal por la compra?
+                                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="accordion-content bg-slate-900 px-5 text-slate-400 text-sm leading-relaxed">
+                                        Sí, todos nuestros precios pueden ser facturados conforme a los requisitos fiscales del SAT (CFDI 4.0), tanto para personas morales como para personas físicas con actividad empresarial.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Columna Derecha: Mapa de Ubicación -->
+                    <div class="h-full min-h-[400px] rounded-xl overflow-hidden border border-slate-800 relative bg-slate-900 flex flex-col">
+                        <div class="p-6 pb-4 border-b border-slate-800 flex justify-between items-center">
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Nuestras Oficinas / Bodega</h4>
+                                <p class="text-sm text-slate-400 mt-1">Guadalajara, Jalisco.</p>
+                            </div>
+                            <div class="w-10 h-10 bg-slate-800 rounded flex items-center justify-center text-caution-400">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow w-full relative">
+                            <!-- Iframe de mapa proporcionado -->
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.8767160135003!2d-103.31619442569449!3d20.674594080887545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b119d9aab1eb%3A0x2cea28b05dbe7ec6!2sCalzado%20de%20Seguridad%20Industrial%20SOS!5e0!3m2!1ses-419!2smx!4v1791256694601!5m2!1ses-419!2smx" 
+                                class="absolute inset-0 w-full h-full"
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="strict-origin-when-cross-origin">
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECCIÓN 4: AVISO DE PRIVACIDAD
+             ============================================== -->
+        <section id="privacidad" class="view-section py-20 bg-slate-900 min-h-[70vh]">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="bg-slate-850 border border-slate-800 rounded-2xl p-8 md:p-12 shadow-xl">
+                    <div class="mb-8 border-b border-slate-700 pb-6">
+                        <h2 class="text-3xl font-bold text-white mb-2">Aviso de Privacidad</h2>
+                        <p class="text-slate-400 text-sm">Última actualización: Octubre 2026</p>
+                    </div>
+
+                    <div class="prose prose-invert prose-slate max-w-none text-slate-300">
+                        <p>En cumplimiento con la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong> de los Estados Unidos Mexicanos, <em>Calzado de Seguridad SOS</em>, con domicilio en Guadalajara, Jalisco, México (en adelante "La Empresa"), hace de su conocimiento el presente Aviso de Privacidad.</p>
+
+                        <h3 class="text-xl font-semibold text-white mt-8 mb-4">1. Datos Personales Recabados</h3>
+                        <p>Para las finalidades señaladas en el presente aviso, podemos recabar sus datos personales (nombre comercial, razón social, correo electrónico, números telefónicos de contacto comercial y domicilio fiscal/entrega) a través de canales directos de mensajería (WhatsApp), llamadas telefónicas, o correo electrónico, para la gestión de cotizaciones B2B.</p>
+
+                        <h3 class="text-xl font-semibold text-white mt-8 mb-4">2. Finalidad del Tratamiento de Datos</h3>
+                        <p>Sus datos comerciales y personales serán utilizados exclusivamente para las siguientes finalidades secundarias y primarias:</p>
+                        <ul class="list-disc pl-6 space-y-2 mt-2">
+                            <li>Proveer los servicios y productos requeridos por su empresa.</li>
+                            <li>Elaboración de cotizaciones, facturación y gestión de cobranza.</li>
+                            <li>Informar sobre cambios, disponibilidad y nuevos productos de calzado industrial.</li>
+                            <li>Dar cumplimiento a obligaciones contraídas con nuestros clientes corporativos.</li>
+                            <li>Logística de envíos y rastreo de paquetería.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-white mt-8 mb-4">3. Limitación de Uso y Divulgación</h3>
+                        <p>La Empresa se compromete a no transferir su información personal o comercial a terceros sin su consentimiento previo, salvo las excepciones previstas en el artículo 37 de la LFPDPPP, así como a realizar esta transferencia en los términos que fija esa ley (por ejemplo, a empresas de paquetería estrictamente para la entrega de mercancía).</p>
+
+                        <h3 class="text-xl font-semibold text-white mt-8 mb-4">4. Derechos ARCO</h3>
+                        <p>Usted tiene derecho de <strong>A</strong>cceder, <strong>R</strong>ectificar y <strong>C</strong>ancelar sus datos personales, así como de <strong>O</strong>ponerse al tratamiento de los mismos o revocar el consentimiento que para tal fin nos haya otorgado. Para ejercer dichos derechos, póngase en contacto a través de nuestro correo electrónico: <em>contacto@calzadodeseguridadsos.com.mx</em> o a nuestra línea de atención telefónica: <em>(33) 2466-0973</em>.</p>
+
+                        <h3 class="text-xl font-semibold text-white mt-8 mb-4">5. Modificaciones al Aviso</h3>
+                        <p>La Empresa se reserva el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente aviso de privacidad, para la atención de novedades legislativas o políticas internas. Estas modificaciones estarán disponibles en esta página web.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/523322222924?text=Hola,%20me%20gustar%C3%ADa%20recibir%20asesor%C3%ADa%20para%20calzado%20industrial." target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-[0_4px_15px_rgba(34,197,94,0.4)] hover:shadow-[0_4px_25px_rgba(34,197,94,0.6)] transition-all hover:-translate-y-1" aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 pt-10 pb-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- Marca -->
+                <div class="flex items-center gap-3">
+                    <img src="images/logo_icon.png" alt="SOS" class="w-7 h-7 object-contain">
+                    <span class="text-white font-bold tracking-wider">Calzado de Seguridad SOS</span>
+                </div>
+                
+                <!-- Links Footer -->
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#inicio" class="nav-link text-slate-400 hover:text-caution-400 transition-colors" data-target="inicio">Inicio</a>
+                    <a href="#productos" class="nav-link text-slate-400 hover:text-caution-400 transition-colors" data-target="productos">Productos</a>
+                    <a href="#contacto" class="nav-link text-slate-400 hover:text-caution-400 transition-colors" data-target="contacto">Contacto</a>
+                    <a href="#privacidad" class="nav-link text-slate-400 hover:text-white transition-colors underline underline-offset-4" data-target="privacidad">Aviso de Privacidad</a>
+                </div>
+            </div>
+            
+            <div class="mt-8 border-t border-slate-900 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
+                <p>&copy; <span id="year"></span> Calzado de Seguridad SOS. Todos los derechos reservados.</p>
+                <p class="mt-2 md:mt-0">Diseñado para la Industria B2B.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Establecer año en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // 2. Lógica de Navegación SPA (Pestañas simuladas)
+            const navLinks = document.querySelectorAll('.nav-link');
+            const views = document.querySelectorAll('.view-section');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Función para cambiar de vista
+            const switchView = (targetId) => {
+                // Ocultar todas las vistas
+                views.forEach(view => {
+                    view.classList.remove('active');
+                    setTimeout(() => {
+                        if(!view.classList.contains('active')) view.style.display = 'none';
+                    }, 300); // esperar transición
+                });
+
+                // Mostrar vista objetivo
+                const targetView = document.getElementById(targetId);
+                if (targetView) {
+                    targetView.style.display = 'block';
+                    // Pequeño timeout para asegurar que el display:block se aplique antes de la opacidad
+                    setTimeout(() => {
+                        targetView.classList.add('active');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 10);
+                }
+
+                // Cerrar menú móvil si está abierto
+                mobileMenu.classList.add('hidden');
+                
+                // Actualizar estado activo visual en links del header
+                navLinks.forEach(link => {
+                    if(link.getAttribute('data-target') === targetId) {
+                        link.classList.add('text-caution-400');
+                        link.classList.remove('text-slate-300');
+                    } else {
+                        link.classList.remove('text-caution-400');
+                        link.classList.add('text-slate-300');
+                    }
+                });
+            };
+
+            // Event Listeners para los enlaces
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('data-target');
+                    if (target) {
+                        // Actualizar URL hash sin salto bruto
+                        history.pushState(null, null, `#${target}`);
+                        switchView(target);
+                    }
+                });
+            });
+
+            // Manejo de carga inicial basada en el Hash de la URL
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && document.getElementById(initialHash)) {
+                switchView(initialHash);
+            } else {
+                switchView('inicio'); // Vista por defecto
+            }
+
+            // Manejo de navegación por botones del navegador (Atrás/Adelante)
+            window.addEventListener('popstate', () => {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && document.getElementById(hash)) {
+                    switchView(hash);
+                } else {
+                    switchView('inicio');
+                }
+            });
+
+            // 3. Menú Móvil Toggle
+            const btnMobileMenu = document.getElementById('mobile-menu-btn');
+            btnMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+
+        // 4. Lógica de Acordeón FAQ
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.fa-chevron-down');
+            const isOpen = content.style.maxHeight;
+
+            // Cerrar todos los demás primero
+            document.querySelectorAll('.accordion-content').forEach(el => {
+                el.style.maxHeight = null;
+                el.style.paddingTop = null;
+                el.style.paddingBottom = null;
+                el.previousElementSibling.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+                el.previousElementSibling.classList.remove('text-caution-400');
+            });
+
+            // Si no estaba abierto, lo abrimos
+            if (!isOpen) {
+                content.style.maxHeight = content.scrollHeight + 32 + "px";
+                content.style.paddingTop = "1rem";
+                content.style.paddingBottom = "1rem";
+                icon.style.transform = "rotate(180deg)";
+                button.classList.add('text-caution-400');
+            }
+        }
+
+        // ==============================================
+        // 5. MODAL TÉCNICO INTERACTIVO (POP-UP)
+        // ==============================================
+        const productData = {
+            ocupacional: {
+                title: "Calzado Ocupacional (Tipo I)",
+                badge: "NOM-113-STPS-2009 Tipo I",
+                badgeBg: "bg-slate-700 text-white border border-slate-500",
+                subtitle: "Uso Rudo Ligero • Almacén • Mensajería y Servicios",
+                img: "Images/tipo_ocupacional.jpeg",
+                specs: [
+                    "<strong>Diseño sin puntera dura:</strong> Máxima ligereza y ergonomía para personal operativo dinámico.",
+                    "<strong>Plantilla anatómica antifatiga:</strong> Reduce el impacto articular durante caminatas prolongadas.",
+                    "<strong>Corte textil / piel ventilada:</strong> Control térmico superior contra la transpiración excesiva.",
+                    "<strong>Entresuela de poliuretano inyectado:</strong> Amortiguación duradera de bajo rebote.",
+                    "<strong>Suela de tracción multipunto:</strong> Antiderrapante en pisos secos, húmedos o epóxicos pulidos."
+                ],
+                waMsg: "Hola,%20me%20interesa%20la%20ficha%20t%C3%A9cnica%20y%20precios%20del%20Calzado%20Ocupacional%20(Tipo%20I)."
+            },
+            dielectrico: {
+                title: "Calzado Dieléctrico (Tipo III)",
+                badge: "NOM-113-STPS-2009 Tipo III",
+                badgeBg: "bg-caution-500 text-slate-900",
+                subtitle: "Líneas Eléctricas • Mantenimiento • Subestaciones",
+                img: "Images/tipo_dielectrico.jpg",
+                specs: [
+                    "<strong>Casquillo no metálico:</strong> Policarbonato ultraligero resistente a 101.7 J de impacto y 11.3 kN de compresión.",
+                    "<strong>Aislamiento de alta tensión:</strong> Probado para resistir descargas de hasta 14,000 V a 60 Hz sin fuga.",
+                    "<strong>100% Metal-Free:</strong> Ojetes, fornituras y refuerzos libres de partes metálicas conductoras.",
+                    "<strong>Plantilla anatómica:</strong> Amortiguación continua con soporte longitudinal y absorción de choque.",
+                    "<strong>Suela bidensidad aislante:</strong> Compuesto de nitrilo resistente a abrasión, aceites y grasas industriales."
+                ],
+                waMsg: "Hola,%20me%20interesa%20la%20ficha%20t%C3%A9cnica%20completa%20del%20Calzado%20Diel%C3%A9ctrico%20(Tipo%20III)."
+            },
+            antiestatico: {
+                title: "Calzado Antiestático ESD (Tipo VII)",
+                badge: "NOM-113-STPS-2009 Tipo VII",
+                badgeBg: "bg-blue-500 text-white",
+                subtitle: "Electrónica • Cuartos Limpios • Ambientes Químicos",
+                img: "Images/tipo_antiestatico.jpeg",
+                specs: [
+                    "<strong>Disipación electrostática (ESD):</strong> Previene la acumulación de cargas corporales estáticas.",
+                    "<strong>Canales disipativos:</strong> Filamentos conductores integrados entre plantilla y suela exterior.",
+                    "<strong>Seguridad contra chispas:</strong> Elimina riesgos de detonación en áreas con vapores inflamables o polvos.",
+                    "<strong>Protección de componentes:</strong> Blindaje para líneas de ensamble de tarjetas y microelectrónica sensible.",
+                    "<strong>Suela disipativa no marcante:</strong> Compuesto especial que evita marcas en pisos de resina conductiva."
+                ],
+                waMsg: "Hola,%20solicito%20especificaciones%20t%C3%A9cnicas%20del%20Calzado%20Antiest%C3%A1tico%20ESD%20(Tipo%20VII)."
+            },
+            hidrofugado: {
+                title: "Calzado Piel Hidrofugada",
+                badge: "Protección Especial Repelente",
+                badgeBg: "bg-emerald-600 text-white",
+                subtitle: "Agroindustria • Frigoríficos • Cárnicos • Intemperie",
+                img: "Images/tipo_hidrofugado.jpeg",
+                specs: [
+                    "<strong>Piel con tratamiento hidrófugo:</strong> Repele fluidos, agua y humedad sin alterar la transpirabilidad natural.",
+                    "<strong>Costuras selladas:</strong> Sellado térmico hermético para evitar filtraciones en uniones críticas.",
+                    "<strong>Resistencia a la degradación:</strong> Estructura protegida contra la acidez de la leche, grasas y agentes cárnicos.",
+                    "<strong>Cuero de fácil secado:</strong> No absorbe líquido en peso ni se acartona al secarse a temperatura ambiente.",
+                    "<strong>Suela de doble densidad:</strong> Ranurado profundo autolimpiable contra acumulación de lodo y residuos."
+                ],
+                waMsg: "Hola,%20me%20interesa%20cotizar%20calzado%20de%20seguridad%20con%20Piel%20Hidrofugada."
+            },
+            antipenetracion: {
+                title: "Calzado Anti-Penetración (Tipo VI)",
+                badge: "NOM-113-STPS-2009 Tipo VI",
+                badgeBg: "bg-orange-600 text-white",
+                subtitle: "Construcción • Demolición • Minería • Recicladoras",
+                img: "Images/tipo_antipenetracion.jpg",
+                specs: [
+                    "<strong>Plantilla anti-perforación integrada:</strong> Barrera de Kevlar/acero resistente a más de 1,100 N de fuerza.",
+                    "<strong>Cobertura total de la planta:</strong> Protección completa desde el talón hasta la punta del pie contra clavos y rebabas.",
+                    "<strong>Casquillo reforzado de impacto:</strong> Protección probada contra caídas accidentales de material pesado.",
+                    "<strong>Flexibilidad estructural:</strong> Inserción multicapa que no endurece la marcha ni cansa el empeine.",
+                    "<strong>Suela de hule vulcanizado de tracción ruda:</strong> Agarre firme en gravilla, varillas y superficies irregulares."
+                ],
+                waMsg: "Hola,%20requiero%20la%20ficha%20t%C3%A9cnica%20del%20Calzado%20Anti-Penetraci%C3%B3n%20(Tipo%20VI)."
+            },
+            impermeable: {
+                title: "Calzado Impermeable Total",
+                badge: "Protección Hidráulica",
+                badgeBg: "bg-cyan-600 text-white",
+                subtitle: "Plantas de Tratamiento • Minería Húmeda • Lavado",
+                img: "Images/tipo_impermeable.webp",
+                specs: [
+                    "<strong>Hermeticidad absoluta:</strong> Estructura de PVC inyectado o membrana interior termosellada a prueba de agua.",
+                    "<strong>Resistencia a químicos diluidos:</strong> Inmune a álcalis ligeros, detergentes industriales y aguas residuales.",
+                    "<strong>Forro interior absorbente:</strong> Mantiene el pie fresco y libre de rozaduras durante jornadas de alta sudoración.",
+                    "<strong>Superficie sanitaria lavable:</strong> Material liso de rápida descontaminación y secado inmediato.",
+                    "<strong>Suela con ventosas de expulsión:</strong> Diseñada para evacuar agua continuamente y evitar hidroplaneo."
+                ],
+                waMsg: "Hola,%20solicito%20informaci%C3%B3n%20y%20precios%20de%20Calzado%20de%20Seguridad%20100%25%20Impermeable."
+            }
+        };
+
+        function openProductModal(key) {
+            const item = productData[key];
+            if (!item) return;
+
+            document.getElementById('modal-img').src = item.img;
+            document.getElementById('modal-img').alt = item.title;
+            document.getElementById('modal-title').textContent = item.title;
+            document.getElementById('modal-subtitle').textContent = item.subtitle;
+            
+            const badgeEl = document.getElementById('modal-badge');
+            badgeEl.textContent = item.badge;
+            badgeEl.className = `inline-block px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider mb-2 ${item.badgeBg}`;
+
+            const specsList = document.getElementById('modal-specs');
+            specsList.innerHTML = item.specs.map(s => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-caution-500 mt-1 text-xs"></i><span>${s}</span></li>`).join('');
+
+            document.getElementById('modal-cta').href = `https://wa.me/523322222924?text=${item.waMsg}`;
+
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('product-modal');
+            if (e.target === modal) {
+                closeProductModal();
+            }
+        });
+    </script>
+
+    <!-- Modal / Pop-up de Despiece Técnico -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col md:flex-row">
+            
+            <!-- Botón Cerrar -->
+            <button onclick="closeProductModal()" class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Columna Izquierda: Imagen Amplificada -->
+            <div class="w-full md:w-1/2 bg-slate-950 flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-slate-800">
+                <img id="modal-img" src="" alt="" class="w-full h-auto max-h-[60vh] object-contain rounded-lg">
+            </div>
+
+            <!-- Columna Derecha: Especificación Técnica y Acción -->
+            <div class="w-full md:w-1/2 p-6 flex flex-col justify-between">
+                <div>
+                    <span id="modal-badge" class="inline-block px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider mb-2"></span>
+                    <h3 id="modal-title" class="text-2xl font-bold text-white mb-1"></h3>
+                    <p id="modal-subtitle" class="text-xs font-semibold text-caution-400 uppercase tracking-wide mb-4"></p>
+                    
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Componentes de ingeniería:</h4>
+                    <ul id="modal-specs" class="space-y-2 text-sm text-slate-300 mb-6"></ul>
+                </div>
+
+                <!-- Botón WhatsApp del Modal -->
+                <a id="modal-cta" href="#" target="_blank" class="w-full text-center bg-caution-500 hover:bg-caution-400 text-slate-900 font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Solicitar Ficha y Cotización
+                </a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
